@@ -2,71 +2,111 @@ import 'package:flutter/material.dart';
 import 'quiz_screen.dart';
 
 class SetupScreen extends StatefulWidget {
-  const SetupScreen({super.key});
-
   @override
   _SetupScreenState createState() => _SetupScreenState();
 }
 
 class _SetupScreenState extends State<SetupScreen> {
   int numQuestions = 5;
-  String category = "9"; // General Knowledge default ID
   String difficulty = "easy";
   String type = "multiple";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Quiz Setup')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            DropdownButtonFormField<int>(
-              value: numQuestions,
-              decoration: const InputDecoration(labelText: 'Number of Questions'),
-              items: [5, 10, 15]
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e.toString())))
-                  .toList(),
-              onChanged: (value) => setState(() => numQuestions = value!),
+      appBar: AppBar(
+        title: Text('Quiz Setup', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.blue, Colors.purple],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
-            const SizedBox(height: 10),
-            DropdownButtonFormField<String>(
-              value: difficulty,
-              decoration: const InputDecoration(labelText: 'Difficulty'),
-              items: ['easy', 'medium', 'hard']
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e.capitalize())))
-                  .toList(),
-              onChanged: (value) => setState(() => difficulty = value!),
-            ),
-            const SizedBox(height: 10),
-            DropdownButtonFormField<String>(
-              value: type,
-              decoration: const InputDecoration(labelText: 'Question Type'),
-              items: ['multiple', 'boolean']
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e.capitalize())))
-                  .toList(),
-              onChanged: (value) => setState(() => type = value!),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => QuizScreen(
-                      numQuestions: numQuestions,
-                      category: category,
-                      difficulty: difficulty,
-                      type: type,
+          ),
+        ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.blue.shade50],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Customize Your Quiz',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20),
+              DropdownButtonFormField<int>(
+                value: numQuestions,
+                decoration: InputDecoration(
+                  labelText: 'Number of Questions',
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                items: [5, 10, 15]
+                    .map((e) => DropdownMenuItem(value: e, child: Text('$e Questions')))
+                    .toList(),
+                onChanged: (value) => setState(() => numQuestions = value!),
+              ),
+              SizedBox(height: 20),
+              DropdownButtonFormField<String>(
+                value: difficulty,
+                decoration: InputDecoration(
+                  labelText: 'Difficulty',
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                items: ['easy', 'medium', 'hard']
+                    .map((e) => DropdownMenuItem(value: e, child: Text(e.capitalize())))
+                    .toList(),
+                onChanged: (value) => setState(() => difficulty = value!),
+              ),
+              SizedBox(height: 20),
+              DropdownButtonFormField<String>(
+                value: type,
+                decoration: InputDecoration(
+                  labelText: 'Question Type',
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                items: ['multiple', 'boolean']
+                    .map((e) => DropdownMenuItem(value: e, child: Text(e.capitalize())))
+                    .toList(),
+                onChanged: (value) => setState(() => type = value!),
+              ),
+              Spacer(),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuizScreen(
+                        numQuestions: numQuestions,
+                        difficulty: difficulty,
+                        type: type,
+                      ),
                     ),
-                  ),
-                );
-              },
-              child: const Text('Start Quiz'),
-            ),
-          ],
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: Text(
+                  'Start Quiz',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
