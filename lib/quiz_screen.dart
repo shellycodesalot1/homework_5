@@ -38,7 +38,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   Future<void> fetchQuestions() async {
     final url =
-        'https://opentdb.com/api.php?amount=${widget.numQuestions}&difficulty=${widget.difficulty}&type=${widget.type}';
+       'https://opentdb.com/api.php?amount=${widget.numQuestions}&difficulty=${widget.difficulty}&type=${widget.type}';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       setState(() {
